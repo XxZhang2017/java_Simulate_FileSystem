@@ -1,0 +1,11 @@
+      <c:if test="${param.come}">
+    <table>
+        <c:forEach var="proName" items="${pageScope.shop}">
+            <tr>
+                <td><c:out value="${proName.key}"></c:out></td>
+                <td><c:out value="${proName.value.quantity}"></c:out></td>
+              <td><c:out value="${proName.value.price}"></c:out></td>
+            </tr>
+        </c:forEach>
+    </table>
+        </c:if>
