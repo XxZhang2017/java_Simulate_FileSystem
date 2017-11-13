@@ -1,0 +1,9 @@
+
+            Class.forName("com.mysql.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","");
+                Statement st=con.createStatement();
+                String query="INSERT INTO cusinfo (cus_ID, e_mail)"+
+                             "VALUES ("+cus.getCusID()+", "+
+                                     "'"+cus.getEmail()+"')";
+                st.executeUpdate(query);
+                con.close();

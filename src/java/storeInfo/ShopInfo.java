@@ -27,12 +27,18 @@ public class ShopInfo implements Serializable {
     public ShopInfo(String product, int quantity,double perPrice) {
         this.product = product;
         this.quantity = quantity;
-        this.price=round(perPrice*quantity,2);
+        this.price=perPrice;
+        this.total=round(price*quantity,2);
     }
 
-    public double gettotal(){
-        return round(price*quantity,2);
+    public double getTotal() {
+        return total;
     }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+   
     public double getPrice() {
         return price;
     }
@@ -55,6 +61,8 @@ public class ShopInfo implements Serializable {
     }
     public void increQuantity(int newQuanti){
         quantity=newQuanti+quantity;
+          total=round(price*quantity,2);
+ //       System.out.println(quantity);
     }
 
     public void setQuantity(int quantity) {

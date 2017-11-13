@@ -34,9 +34,9 @@ public class CusInfo {
         this.cusID = cusID;
     }
 
-    public CusInfo(String email) {
+    public CusInfo(String email,int num) {
         this.email = email;
-        this.cusID = CusInfo.cusIdGen();
+        this.cusID = num;
     }
         
 }

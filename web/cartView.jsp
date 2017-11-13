@@ -17,37 +17,32 @@
     </head>
     <body>
   
-               <%
-                  // if(session.getAttribute("Usershopping")==null){
-                   
-                  // }
-             HashMap<String,ShopInfo> shopping=(HashMap<String,ShopInfo>)session.getAttribute("Usershopping");
-            for(ShopInfo shop:shopping.values()){
-                
-           
-            %>
+
           <table border="1">
               <tr>
                   <th>The product</th>
                   <th>The number</th>
                   <th>The price</th>
               </tr>
-             
-    
-                     
-                     <tr>
- 
-            </tr>
-            
+                                   <%
+                  // if(session.getAttribute("Usershopping")==null){
+                   
+                  // }
+             HashMap<String,ShopInfo> shopping=(HashMap<String,ShopInfo>)session.getAttribute("Usershopping");
+             double sum=0.0;
+             if(shopping!=null){
+             for(ShopInfo shop:shopping.values()){
+                sum+=shop.getTotal();
+           
+            %>
             <tr>
             <th><%= shop.getProduct()   %></th>
             <th><%= shop.getQuantity()   %></th>
-            <th><%= shop.gettotal()   %></th>
-            <th><for</th>
-            <%  }  %>
+            <th><%= shop.getTotal()   %></th>
+            <%  } } %>
             </tr>
             
-    
+            <div>The total is <%=sum%></div>    
         </table>
             <form action="index.jsp"><input type="submit" value="Go back" />
             </form>

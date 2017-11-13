@@ -41,7 +41,7 @@
             <tr>
             <th><%= shop.getProduct()   %></th>
             <th><%= shop.getQuantity()   %></th>
-            <th><%= shop.gettotal()   %></th>
+            <th><%= shop.getTotal()   %></th>
             <th><for</th>
              </tr>
               </table>

@@ -35,6 +35,7 @@ public class InforServlet extends HttpServlet {
             HashMap<String,ShopInfo> shopping=(HashMap<String,ShopInfo>) session.getAttribute("Usershopping");
             
             if(shopping!=null){
+                System.out.println("shopping is not null");
                   for(String name:shopping.keySet()){
                 if(name.equals(one)){
                     shopping.get(one).increQuantity(quantity);
@@ -46,6 +47,7 @@ public class InforServlet extends HttpServlet {
              addFlag=false;
             }
             }else{
+                System.out.println("shopping is null");
            shopping=new HashMap<String,ShopInfo>();
             for(String name:shopping.keySet()){
                 if(name.equals(one)){
@@ -58,14 +60,7 @@ public class InforServlet extends HttpServlet {
              addFlag=false;
             }
         }
-        /*    if(apple!=0){
-                shopping.add(new ShopInfo("apple",apple,3.3));
-            }
-            if(banana!=0){
-                shopping.add(new ShopInfo("banana",banana,0.65));
-            }*/
-       
-        
+    
             session.setAttribute("Usershopping", shopping);
             Cookie coming=new Cookie("come","come");
             coming.setMaxAge(60*60*24);

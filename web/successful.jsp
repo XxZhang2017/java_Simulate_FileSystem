@@ -13,7 +13,9 @@
     </head>
     <body>
         <h1>Order successful</h1>
-        <div>your order is</div>       
-        <div>payment method is</div>
+        <div>your order number is ${ordero.orId}</div>       
+        <div>payment method is ${ordero.carNum}</div>
+        <form action="yourOrder" type="text" name="userCard" >
+        </form>
     </body>
 </html>

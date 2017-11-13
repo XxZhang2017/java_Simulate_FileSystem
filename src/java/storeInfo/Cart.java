@@ -32,4 +32,40 @@ public class Cart {
         this.number = number;
         this.sum_price = sum_price;
     }
+
+    public Cart() {
+    }
+    
+    public int getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(int orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public String getPro_Name() {
+        return pro_Name;
+    }
+
+    public void setPro_Name(String pro_Name) {
+        this.pro_Name = pro_Name;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public double getSum_price() {
+        return sum_price;
+    }
+
+    public void setSum_price(double sum_price) {
+        this.sum_price = sum_price;
+    }
+    
 }

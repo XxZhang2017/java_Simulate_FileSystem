@@ -26,6 +26,7 @@ import storeInfo.CusInfo;
 import storeInfo.MyDb;
 import storeInfo.ShopInfo;
 import java.lang.Object.*;
+import storeInfo.OrderInfo;
 /**
  *
  * @author d
@@ -55,6 +56,9 @@ public class CheckoutServlet extends HttpServlet {
            double total=0.0;
            String query;
            int order=Cart.orderGen();
+ //          Cart carto;
+           CusInfo cusIo;
+           OrderInfo ordero;
            
            String cus;
        Connection con;
@@ -73,43 +77,41 @@ public class CheckoutServlet extends HttpServlet {
        ResultSet rs=st.executeQuery("SELECT cus_ID FROM cusinfo WHERE e_mail="+"'"+email+"'");
          if(rs.next()){
             cus=rs.getString(1);
-         if(shopping!=null){
+//customInfo obj; setAttri;
+            cusIo=new CusInfo(email,Integer.parseInt(cus));
+            mySession.setAttribute("cusIo", cusIo);
+        
+            if(shopping!=null){
              for(ShopInfo mysh:shopping.values()){
-                 total+=mysh.gettotal();
- //                System.out.println("_____________ "+mysh.gettotal());
+                 total+=mysh.getTotal();
              }
          }         
+            ordero=new OrderInfo(order,Integer.parseInt(card),Integer.parseInt(cus),Double.toString(total));
+            mySession.setAttribute("ordero", ordero);
+            
             query="INSERT INTO orderinfo(order_num,card_num,cus_num,T_price)"
                     +"VALUES ('"+order+"', "
                            +"'"+Integer.parseInt(card)+"', "
                            +"'"+Integer.parseInt(cus)+"', "
-                           +"'"+total+"') ";
+                           +"'"+Double.toString(total)+"') ";
         
              st.executeUpdate(query); 
              
              String preparedQuery ="INSERT INTO cart (o_ID,product_Name,number,sum_price)"
                    +"VALUES "+"(?, ?, ?, ?)";
              PreparedStatement ps = con.prepareStatement(preparedQuery);
-   try{                   if(shopping!=null){
-             for(ShopInfo mysh:shopping.values()){
+   try{                   
+           if(shopping!=null){
+           for(ShopInfo mysh:shopping.values()){
                  
             ps.setInt(1,order);
             ps.setString(2, mysh.getProduct() );
             ps.setString(3,Integer.toString(mysh.getQuantity()));
-            ps.setString(4, Double.toString(mysh.gettotal()));
+            ps.setString(4, Double.toString(mysh.getTotal()));
             ps.executeUpdate();
              }
              ps.close();
                       }
-
-                     
-/*            query="INSERT INTO cart (number,o_ID,product_Name,sum_price)"
-                   +"VALUES ('"+num+"', "
-                           +"'"+order+"', "
-                           +"'"+pro+"', "
-                           +"'"+sum+"') ";
-            st.executeUpdate(query);*/               
-             
          } catch (SQLException ex) {
             Logger.getLogger(CheckoutServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -122,94 +124,13 @@ public class CheckoutServlet extends HttpServlet {
             }catch (ClassNotFoundException ex) {
             Logger.getLogger(CheckoutServlet.class.getName()).log(Level.SEVERE, null, ex);
         }   
-       
-    /*     try{
-           Class.forName("com.mysql.jdbc.Driver");
-               con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","");
-            st=con.createStatement();
-         if(shopping!=null){
-             for(ShopInfo mysh:shopping.values()){
-                 pro=mysh.getProduct();
-                 num=mysh.getQuantity();
-                 sum=mysh.gettotal();
-                     
-            query="INSERT INTO cart (number,o_ID,product_Name,sum_price)"
-                   +"VALUES ('"+num+"', "
-                           +"'"+order+"', "
-                           +"'"+pro+"', "
-                           +"'"+sum+"') ";
-            st.executeUpdate(query);               
-             }
-            
-            st.close();
-            con.close();
-            String url="/successful.jsp";
+       mySession.removeAttribute("Usershopping");
+         String url="/successful.jsp";
            RequestDispatcher dispatcher=getServletContext().getRequestDispatcher(url);
-            dispatcher.forward(request, response);
-         
-         }else{
-           
-                     PrintWriter out=response.getWriter();
-                     out.println("<h1>Fair to get shopping obj</h1>");
-          st.close();
-            con.close();           
-         }              
-         
-        
-           
-            
- //          RequestDispatcher dispatcher=getServletContext().getRequestDispatcher(url);
- //           dispatcher.forward(request, response);
-             }catch (SQLException ex) {
-                Logger.getLogger(CheckoutServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }catch (ClassNotFoundException ex) {
-            Logger.getLogger(CheckoutServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
-       
- /*          Connection con;
-            try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test,","root","");
-                Statement st=con.createStatement();
-          
-           String pro;
-           int num;
-           double sum;
-           int order=Cart.orderGen();
-             for(ShopInfo mysh:shopping.values()){
-                 pro=mysh.getProduct();
-                 num=mysh.getQuantity();
-                 sum=mysh.gettotal();
-                     
-           String query="INSRT INTO cart (product_Name,num_instance,price)"
-                   +"VALUES ('"+pro+"', "
-                           +"'"+num+"', "
-                           +"'"+sum+"') ";
-        
-           int rowCount=st.executeUpdate(query);
-             }
-             }catch (SQLException ex) {
-                Logger.getLogger(CheckoutServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            //scope of session;
-            //how to insert value;
-*/
-        
-  //       }
-            PrintWriter out=response.getWriter();
-                     out.println("<h1>Fair to get shopping obj</h1>");
+         dispatcher.forward(request, response);
         
          }
     
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
