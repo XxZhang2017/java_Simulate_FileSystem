@@ -1,4 +1,4 @@
-# online app store
+# online store application
 Simple fruit shop project using servlet.
 2017/11/11
 There is no login in system.
